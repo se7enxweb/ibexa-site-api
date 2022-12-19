@@ -136,7 +136,7 @@ final class Content extends APIContent
                 return $this->getContentInfo()->isVisible;
 
             case 'url':
-                return $this->getUrl();
+                return $this->internalGetUrl();
         }
 
         return parent::__get($property);
@@ -419,13 +419,18 @@ final class Content extends APIContent
         return $this->contentInfo;
     }
 
-    private function getUrl(): Url
+    private function internalGetUrl(): Url
     {
         if ($this->url === null) {
             $this->url = $this->domainObjectMapper->mapUrl($this);
         }
 
         return $this->url;
+    }
+
+    public function getUrl(array $parameters = []): string
+    {
+        return $this->internalGetUrl()->getAbsolutePath($parameters);
     }
 
     /**
