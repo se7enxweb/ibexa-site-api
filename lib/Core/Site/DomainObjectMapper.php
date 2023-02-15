@@ -10,9 +10,11 @@ use Ibexa\Contracts\Core\Repository\Repository;
 use Ibexa\Contracts\Core\Repository\Values\Content\Field as RepoField;
 use Ibexa\Contracts\Core\Repository\Values\Content\Location as RepoLocation;
 use Ibexa\Contracts\Core\Repository\Values\Content\VersionInfo;
+use Netgen\IbexaSiteApi\API\Routing\UrlGenerator;
 use Netgen\IbexaSiteApi\API\Site as SiteInterface;
 use Netgen\IbexaSiteApi\API\Values\Content as SiteContent;
 use Netgen\IbexaSiteApi\API\Values\Field as APIField;
+use Netgen\IbexaSiteApi\API\Values\Url;
 use Netgen\IbexaSiteApi\Core\Site\Values\Content;
 use Netgen\IbexaSiteApi\Core\Site\Values\ContentInfo;
 use Netgen\IbexaSiteApi\Core\Site\Values\Field;
@@ -32,17 +34,20 @@ final class DomainObjectMapper
     private FieldTypeService $fieldTypeService;
     private ContentTypeService $contentTypeService;
     private Repository $repository;
+    private UrlGenerator $urlGenerator;
     private bool $failOnMissingField;
     private LoggerInterface $logger;
 
     public function __construct(
         SiteInterface $site,
         Repository $repository,
+        UrlGenerator $urlGenerator,
         bool $failOnMissingField,
         LoggerInterface $logger
     ) {
         $this->site = $site;
         $this->repository = $repository;
+        $this->urlGenerator = $urlGenerator;
         $this->contentTypeService = $repository->getContentTypeService();
         $this->fieldTypeService = $repository->getFieldTypeService();
         $this->failOnMissingField = $failOnMissingField;
@@ -111,6 +116,14 @@ final class DomainObjectMapper
             ],
             $this->logger,
         );
+    }
+
+    /**
+     * @param Content|Location $object
+     */
+    public function mapUrl($object): Url
+    {
+        return new Url($this->urlGenerator, $object);
     }
 
     /**
