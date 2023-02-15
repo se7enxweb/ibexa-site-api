@@ -373,6 +373,16 @@ final class Content extends APIContent
         return $pager;
     }
 
+    public function getPath(array $parameters = []): string
+    {
+        return $this->internalGetPath()->getAbsolute($parameters);
+    }
+
+    public function getUrl(array $parameters = []): string
+    {
+        return $this->internalGetUrl()->get($parameters);
+    }
+
     /**
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException
@@ -526,15 +536,5 @@ final class Content extends APIContent
         }
 
         return $this->url;
-    }
-
-    public function getPath(array $parameters = []): string
-    {
-        return $this->internalGetPath()->getAbsolute($parameters);
-    }
-
-    public function getUrl(array $parameters = []): string
-    {
-        return $this->internalGetUrl()->get($parameters);
     }
 }
