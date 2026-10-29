@@ -11,12 +11,14 @@ use Netgen\Bundle\IbexaSiteApiBundle\View\ContentRenderer;
  */
 class EmbeddedContentViewRuntime
 {
-    public function __construct(
+    private ContentRenderer $contentRenderer;
+    public function __construct(ContentRenderer $contentRenderer)
+    {
         /**
          * @readonly
          */
-        private ContentRenderer $contentRenderer,
-    ) {}
+        $this->contentRenderer = $contentRenderer;
+    }
 
     /**
      * Renders the HTML for a given $content.

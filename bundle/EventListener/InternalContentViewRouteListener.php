@@ -26,24 +26,29 @@ use function in_array;
 
 final class InternalContentViewRouteListener implements EventSubscriberInterface
 {
-    public function __construct(
+    private ConfigResolverInterface $configResolver;
+    private FragmentHandler $fragmentHandler;
+    private RouterInterface $router;
+    private array $siteaccessGroups;
+    public function __construct(ConfigResolverInterface $configResolver, FragmentHandler $fragmentHandler, RouterInterface $router, array $siteaccessGroups)
+    {
         /**
          * @readonly
          */
-        private ConfigResolverInterface $configResolver,
+        $this->configResolver = $configResolver;
         /**
          * @readonly
          */
-        private FragmentHandler $fragmentHandler,
+        $this->fragmentHandler = $fragmentHandler;
         /**
          * @readonly
          */
-        private RouterInterface $router,
+        $this->router = $router;
         /**
          * @readonly
          */
-        private array $siteaccessGroups,
-    ) {}
+        $this->siteaccessGroups = $siteaccessGroups;
+    }
 
     public static function getSubscribedEvents(): array
     {

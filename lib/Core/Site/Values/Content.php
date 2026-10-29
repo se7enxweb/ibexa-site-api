@@ -103,22 +103,35 @@ final class Content extends APIContent
      */
     public function __get($property)
     {
-        return match ($property) {
-            'fields' => $this->fields,
-            'mainLocation' => $this->getMainLocation(),
-            'innerContent' => $this->getInnerContent(),
-            'versionInfo',
-            'innerVersionInfo' => $this->innerVersionInfo,
-            'contentInfo' => $this->getContentInfo(),
-            'owner' => $this->getOwner(),
-            'innerOwnerUser' => $this->getInnerOwnerUser(),
-            'modifier' => $this->getModifier(),
-            'innerModifierUser' => $this->getInnerModifierUser(),
-            'isVisible' => $this->getContentInfo()->isVisible,
-            'url' => $this->internalGetUrl(),
-            'path' => $this->internalGetPath(),
-            default => parent::__get($property),
-        };
+        switch ($property) {
+            case 'fields':
+                return $this->fields;
+            case 'mainLocation':
+                return $this->getMainLocation();
+            case 'innerContent':
+                return $this->getInnerContent();
+            case 'versionInfo':
+            case 'innerVersionInfo':
+                return $this->innerVersionInfo;
+            case 'contentInfo':
+                return $this->getContentInfo();
+            case 'owner':
+                return $this->getOwner();
+            case 'innerOwnerUser':
+                return $this->getInnerOwnerUser();
+            case 'modifier':
+                return $this->getModifier();
+            case 'innerModifierUser':
+                return $this->getInnerModifierUser();
+            case 'isVisible':
+                return $this->getContentInfo()->isVisible;
+            case 'url':
+                return $this->internalGetUrl();
+            case 'path':
+                return $this->internalGetPath();
+            default:
+                return parent::__get($property);
+        }
     }
 
     /**
@@ -128,20 +141,22 @@ final class Content extends APIContent
      */
     public function __isset($property): bool
     {
-        return match ($property) {
-            'contentInfo',
-            'fields',
-            'mainLocation',
-            'innerContent',
-            'versionInfo',
-            'owner',
-            'innerOwnerUser',
-            'modifier',
-            'innerModifierUser',
-            'isVisible',
-            'url' => true,
-            default => parent::__isset($property),
-        };
+        switch ($property) {
+            case 'contentInfo':
+            case 'fields':
+            case 'mainLocation':
+            case 'innerContent':
+            case 'versionInfo':
+            case 'owner':
+            case 'innerOwnerUser':
+            case 'modifier':
+            case 'innerModifierUser':
+            case 'isVisible':
+            case 'url':
+                return true;
+            default:
+                return parent::__isset($property);
+        }
     }
 
     public function hasField(string $identifier): bool
@@ -249,7 +264,7 @@ final class Content extends APIContent
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
-        int $currentPage = 1,
+        int $currentPage = 1
     ): Pagerfanta {
         $relations = $this->site->getRelationService()->loadFieldRelations(
             $this,
@@ -270,7 +285,7 @@ final class Content extends APIContent
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
-        int $currentPage = 1,
+        int $currentPage = 1
     ): Pagerfanta {
         return $this->repository->sudo(
             fn () => $this->filterFieldRelations(
@@ -318,7 +333,7 @@ final class Content extends APIContent
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
-        int $currentPage = 1,
+        int $currentPage = 1
     ): Pagerfanta {
         $relations = $this->site->getRelationService()->loadFieldRelationLocations(
             $this,
@@ -339,7 +354,7 @@ final class Content extends APIContent
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
-        int $currentPage = 1,
+        int $currentPage = 1
     ): Pagerfanta {
         return $this->repository->sudo(
             fn () => $this->filterFieldRelationLocations(
@@ -372,7 +387,7 @@ final class Content extends APIContent
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
-        int $currentPage = 1,
+        int $currentPage = 1
     ): Pagerfanta {
         $relations = $this->site->getRelationService()->loadReverseFieldRelations(
             $this,
@@ -393,7 +408,7 @@ final class Content extends APIContent
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
-        int $currentPage = 1,
+        int $currentPage = 1
     ): Pagerfanta {
         return $this->repository->sudo(
             fn () => $this->filterReverseFieldRelations(
@@ -426,7 +441,7 @@ final class Content extends APIContent
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
-        int $currentPage = 1,
+        int $currentPage = 1
     ): Pagerfanta {
         $relations = $this->site->getRelationService()->loadReverseFieldRelationLocations(
             $this,
@@ -447,7 +462,7 @@ final class Content extends APIContent
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
         int $maxPerPage = 25,
-        int $currentPage = 1,
+        int $currentPage = 1
     ): Pagerfanta {
         return $this->repository->sudo(
             fn () => $this->filterReverseFieldRelationLocations(
@@ -519,7 +534,7 @@ final class Content extends APIContent
             function (): ?APIContent {
                 try {
                     return $this->site->getLoadService()->loadContent($this->getContentInfo()->ownerId);
-                } catch (NotFoundException) {
+                } catch (NotFoundException $exception) {
                     // Do nothing
                 }
 
@@ -540,7 +555,7 @@ final class Content extends APIContent
 
         try {
             $this->innerOwnerUser = $this->userService->loadUser($this->getContentInfo()->ownerId);
-        } catch (NotFoundException) {
+        } catch (NotFoundException $exception) {
             // Do nothing
         }
 
@@ -559,7 +574,7 @@ final class Content extends APIContent
             function (): ?APIContent {
                 try {
                     return $this->site->getLoadService()->loadContent($this->innerVersionInfo->creatorId);
-                } catch (NotFoundException) {
+                } catch (NotFoundException $exception) {
                     // Do nothing
                 }
 
@@ -580,7 +595,7 @@ final class Content extends APIContent
 
         try {
             $this->innerModifierUser = $this->userService->loadUser($this->innerVersionInfo->creatorId);
-        } catch (NotFoundException) {
+        } catch (NotFoundException $exception) {
             // Do nothing
         }
 

@@ -18,14 +18,16 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
  */
 final class Caching extends Provider
 {
+    private Provider $provider;
     private array $cache = [];
 
-    public function __construct(
+    public function __construct(Provider $provider)
+    {
         /**
          * @readonly
          */
-        private Provider $provider,
-    ) {}
+        $this->provider = $provider;
+    }
 
     public function hasContent(string $name): bool
     {

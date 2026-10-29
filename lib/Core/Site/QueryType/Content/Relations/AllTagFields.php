@@ -39,7 +39,10 @@ final class AllTagFields extends Content
         ]);
     }
 
-    protected function getFilterCriteria(array $parameters): null|array|Criterion
+    /**
+     * @return null|mixed[]|\Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion
+     */
+    protected function getFilterCriteria(array $parameters)
     {
         /** @var \Netgen\IbexaSiteApi\API\Values\Content $content */
         $content = $parameters['content'];

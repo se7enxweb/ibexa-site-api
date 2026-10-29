@@ -22,12 +22,14 @@ use function mb_stripos;
 
 final class Resolver
 {
-    public function __construct(
+    private RouterInterface $router;
+    public function __construct(RouterInterface $router)
+    {
         /**
          * @readonly
          */
-        private RouterInterface $router,
-    ) {}
+        $this->router = $router;
+    }
 
     /**
      * Builds a path to the redirect target.
@@ -66,7 +68,7 @@ final class Resolver
             );
         }
 
-        throw new InvalidRedirectConfiguration($object::class);
+        throw new InvalidRedirectConfiguration(get_class($object));
     }
 
     /**

@@ -12,12 +12,14 @@ use Netgen\Bundle\IbexaSiteApiBundle\View\ContentRenderer;
  */
 class ContentViewRuntime
 {
-    public function __construct(
+    private ContentRenderer $contentRenderer;
+    public function __construct(ContentRenderer $contentRenderer)
+    {
         /**
          * @readonly
          */
-        private ContentRenderer $contentRenderer,
-    ) {}
+        $this->contentRenderer = $contentRenderer;
+    }
 
     /**
      * Renders the HTML for a given $content.
@@ -26,7 +28,7 @@ class ContentViewRuntime
         ValueObject $value,
         string $viewType,
         array $parameters = [],
-        bool $layout = false,
+        bool $layout = false
     ): string {
         return $this->contentRenderer->renderContent($value, $viewType, $parameters, $layout);
     }

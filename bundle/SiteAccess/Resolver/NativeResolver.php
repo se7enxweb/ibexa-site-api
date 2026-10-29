@@ -30,26 +30,30 @@ use const SORT_NUMERIC;
  */
 class NativeResolver extends Resolver
 {
+    private Handler $persistenceHandler;
+    private int $recursionLimit;
+    private ConfigResolverInterface $configResolver;
     private SiteAccess $currentSiteaccess;
     private array $siteaccesses;
     private array $siteaccessGroupsBySiteaccess;
 
     private array $cache = [];
 
-    public function __construct(
+    public function __construct(Handler $persistenceHandler, int $recursionLimit, ConfigResolverInterface $configResolver)
+    {
         /**
          * @readonly
          */
-        private Handler $persistenceHandler,
+        $this->persistenceHandler = $persistenceHandler;
         /**
          * @readonly
          */
-        private int $recursionLimit,
+        $this->recursionLimit = $recursionLimit;
         /**
          * @readonly
          */
-        private ConfigResolverInterface $configResolver,
-    ) {}
+        $this->configResolver = $configResolver;
+    }
 
     public function setSiteaccess(?SiteAccess $currentSiteAccess = null): void
     {
@@ -437,7 +441,10 @@ class NativeResolver extends Resolver
         return false;
     }
 
-    private function getParameter(string $name): mixed
+    /**
+     * @return mixed
+     */
+    private function getParameter(string $name)
     {
         $currentSiteaccess = $this->currentSiteaccess->name;
 

@@ -9,12 +9,14 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function __construct(
+    protected string $rootNodeName;
+    public function __construct(string $rootNodeName)
+    {
         /**
          * @readonly
          */
-        protected string $rootNodeName,
-    ) {}
+        $this->rootNodeName = $rootNodeName;
+    }
 
     public function getConfigTreeBuilder(): TreeBuilder
     {

@@ -21,27 +21,35 @@ use function sprintf;
 
 final class LanguageResolver extends BaseLanguageResolver
 {
+    private BaseSettings $settings;
+    private Resolver $siteaccessResolver;
+    private ConfigResolverInterface $configResolver;
+    private ?LoggerInterface $logger = null;
     private SiteAccess $currentSiteaccess;
 
     public function __construct(
-        /**
-         * @readonly
-         */
-        private BaseSettings $settings,
-        /**
-         * @readonly
-         */
-        private Resolver $siteaccessResolver,
-        /**
-         * @readonly
-         */
-        private ConfigResolverInterface $configResolver,
-        /**
-         * @readonly
-         */
-        private ?LoggerInterface $logger = null
+        BaseSettings $settings,
+        Resolver $siteaccessResolver,
+        ConfigResolverInterface $configResolver,
+        ?LoggerInterface $logger = null
     )
     {
+        /**
+         * @readonly
+         */
+        $this->settings = $settings;
+        /**
+         * @readonly
+         */
+        $this->siteaccessResolver = $siteaccessResolver;
+        /**
+         * @readonly
+         */
+        $this->configResolver = $configResolver;
+        /**
+         * @readonly
+         */
+        $this->logger = $logger;
         $this->logger = $logger ?? new NullLogger();
     }
 

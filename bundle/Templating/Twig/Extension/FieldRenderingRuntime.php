@@ -16,20 +16,24 @@ use function sprintf;
  */
 class FieldRenderingRuntime
 {
-    public function __construct(
+    private Environment $environment;
+    private FieldBlockRenderer $fieldBlockRenderer;
+    private ParameterProviderRegistryInterface $parameterProviderRegistry;
+    public function __construct(Environment $environment, FieldBlockRenderer $fieldBlockRenderer, ParameterProviderRegistryInterface $parameterProviderRegistry)
+    {
         /**
          * @readonly
          */
-        private Environment $environment,
+        $this->environment = $environment;
         /**
          * @readonly
          */
-        private FieldBlockRenderer $fieldBlockRenderer,
+        $this->fieldBlockRenderer = $fieldBlockRenderer;
         /**
          * @readonly
          */
-        private ParameterProviderRegistryInterface $parameterProviderRegistry,
-    ) {}
+        $this->parameterProviderRegistry = $parameterProviderRegistry;
+    }
 
     /**
      * Renders the HTML for a given field.

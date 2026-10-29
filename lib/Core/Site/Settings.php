@@ -18,51 +18,67 @@ use Netgen\IbexaSiteApi\API\Settings as BaseSettings;
 final class Settings extends BaseSettings
 {
     /**
+     * @var string[]
+     */
+    private array $prioritizedLanguages;
+    private bool $useAlwaysAvailable;
+    private int $rootLocationId;
+    private bool $showHiddenItems;
+    private bool $failOnMissingField;
+    /**
      * @param string[] $prioritizedLanguages
      *
      * @noinspection PhpPropertyCanBeReadonlyInspection
      */
-    public function __construct(
-        private array $prioritizedLanguages,
+    public function __construct(array $prioritizedLanguages, bool $useAlwaysAvailable, int $rootLocationId, bool $showHiddenItems, bool $failOnMissingField)
+    {
+        $this->prioritizedLanguages = $prioritizedLanguages;
         /**
          * @readonly
          */
-        private bool $useAlwaysAvailable,
+        $this->useAlwaysAvailable = $useAlwaysAvailable;
         /**
          * @readonly
          */
-        private int $rootLocationId,
+        $this->rootLocationId = $rootLocationId;
         /**
          * @readonly
          */
-        private bool $showHiddenItems,
+        $this->showHiddenItems = $showHiddenItems;
         /**
          * @readonly
          */
-        private bool $failOnMissingField,
-    ) {}
+        $this->failOnMissingField = $failOnMissingField;
+    }
 
     /**
      * @return bool|int|string[]
      *
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\PropertyNotFoundException
      */
-    public function __get(string $property): array|bool|int
+    public function __get(string $property)
     {
-        return match ($property) {
-            'prioritizedLanguages' => $this->prioritizedLanguages,
-            'useAlwaysAvailable' => $this->useAlwaysAvailable,
-            'rootLocationId' => $this->rootLocationId,
-            'showHiddenItems' => $this->showHiddenItems,
-            'failOnMissingField' => $this->failOnMissingField,
-            default => throw new PropertyNotFoundException($property, self::class),
-        };
+        switch ($property) {
+            case 'prioritizedLanguages':
+                return $this->prioritizedLanguages;
+            case 'useAlwaysAvailable':
+                return $this->useAlwaysAvailable;
+            case 'rootLocationId':
+                return $this->rootLocationId;
+            case 'showHiddenItems':
+                return $this->showHiddenItems;
+            case 'failOnMissingField':
+                return $this->failOnMissingField;
+            default:
+                throw new PropertyNotFoundException($property, self::class);
+        }
     }
 
     /**
      * @throws \Ibexa\Contracts\Core\Repository\Exceptions\PropertyReadOnlyException
+     * @param mixed $value
      */
-    public function __set(string $property, mixed $value): void
+    public function __set(string $property, $value): void
     {
         throw new PropertyReadOnlyException($property, self::class);
     }
@@ -72,13 +88,15 @@ final class Settings extends BaseSettings
      */
     public function __isset(string $property): bool
     {
-        return match ($property) {
-            'prioritizedLanguages',
-            'useAlwaysAvailable',
-            'rootLocationId',
-            'showHiddenItems',
-            'failOnMissingField' => true,
-            default => throw new PropertyNotFoundException($property, self::class),
-        };
+        switch ($property) {
+            case 'prioritizedLanguages':
+            case 'useAlwaysAvailable':
+            case 'rootLocationId':
+            case 'showHiddenItems':
+            case 'failOnMissingField':
+                return true;
+            default:
+                throw new PropertyNotFoundException($property, self::class);
+        }
     }
 }

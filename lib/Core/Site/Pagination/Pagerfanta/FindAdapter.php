@@ -17,13 +17,15 @@ use Netgen\IbexaSiteApi\API\FindService;
  */
 final class FindAdapter extends BaseAdapter
 {
+    private FindService $findService;
     public function __construct(
         Query $query,
+        FindService $findService
+    ) {
         /**
          * @readonly
          */
-        private FindService $findService,
-    ) {
+        $this->findService = $findService;
         parent::__construct($query);
     }
 

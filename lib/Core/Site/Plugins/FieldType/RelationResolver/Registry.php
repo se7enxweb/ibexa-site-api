@@ -45,11 +45,14 @@ class Registry
      */
     public function get(string $fieldTypeIdentifier): Resolver
     {
-        return $this->resolverMap[$fieldTypeIdentifier] ?? throw new OutOfBoundsException(
-            sprintf(
-                "No relation resolver is registered for field type identifier '%s'",
-                $fieldTypeIdentifier,
-            ),
-        );
+        if (!isset($this->resolverMap[$fieldTypeIdentifier])) {
+            throw new OutOfBoundsException(
+                sprintf(
+                    "No relation resolver is registered for field type identifier '%s'",
+                    $fieldTypeIdentifier,
+                ),
+            );
+        }
+        return $this->resolverMap[$fieldTypeIdentifier];
     }
 }

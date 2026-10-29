@@ -13,12 +13,14 @@ use function is_a;
 
 abstract class SiteParamConverter implements ParamConverterInterface
 {
-    public function __construct(
+    protected LoadService $loadService;
+    public function __construct(LoadService $loadService)
+    {
         /**
          * @readonly
          */
-        protected LoadService $loadService,
-    ) {}
+        $this->loadService = $loadService;
+    }
 
     public function supports(ParamConverter $configuration): bool
     {
@@ -49,5 +51,8 @@ abstract class SiteParamConverter implements ParamConverterInterface
      */
     abstract protected function getPropertyName(): string;
 
-    abstract protected function loadValueObject(int $id): mixed;
+    /**
+     * @return mixed
+     */
+    abstract protected function loadValueObject(int $id);
 }

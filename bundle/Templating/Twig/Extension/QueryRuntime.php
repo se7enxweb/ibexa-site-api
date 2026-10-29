@@ -19,35 +19,49 @@ use function sprintf;
  */
 class QueryRuntime
 {
-    public function __construct(
+    private QueryExecutor $queryExecutor;
+    public function __construct(QueryExecutor $queryExecutor)
+    {
         /**
          * @readonly
          */
-        private QueryExecutor $queryExecutor,
-    ) {}
+        $this->queryExecutor = $queryExecutor;
+    }
 
-    public function executeQuery(mixed $context, string $name): Pagerfanta
+    /**
+     * @param mixed $context
+     */
+    public function executeQuery($context, string $name): Pagerfanta
     {
         return $this->queryExecutor->execute(
             $this->getQueryDefinitionCollection($context)->get($name),
         );
     }
 
-    public function sudoExecuteQuery(mixed $context, string $name): Pagerfanta
+    /**
+     * @param mixed $context
+     */
+    public function sudoExecuteQuery($context, string $name): Pagerfanta
     {
         return $this->queryExecutor->sudoExecute(
             $this->getQueryDefinitionCollection($context)->get($name),
         );
     }
 
-    public function executeRawQuery(mixed $context, string $name): SearchResult
+    /**
+     * @param mixed $context
+     */
+    public function executeRawQuery($context, string $name): SearchResult
     {
         return $this->queryExecutor->executeRaw(
             $this->getQueryDefinitionCollection($context)->get($name),
         );
     }
 
-    public function sudoExecuteRawQuery(mixed $context, string $name): SearchResult
+    /**
+     * @param mixed $context
+     */
+    public function sudoExecuteRawQuery($context, string $name): SearchResult
     {
         return $this->queryExecutor->sudoExecuteRaw(
             $this->getQueryDefinitionCollection($context)->get($name),
@@ -58,14 +72,18 @@ class QueryRuntime
      * Returns the QueryDefinitionCollection variable from the given $context.
      *
      * @throws \Twig\Error\RuntimeError
+     * @param mixed $context
      */
-    private function getQueryDefinitionCollection(mixed $context): QueryDefinitionCollection
+    private function getQueryDefinitionCollection($context): QueryDefinitionCollection
     {
-        return $context[ContentView::QUERY_DEFINITION_COLLECTION_NAME] ?? throw new RuntimeError(
-            sprintf(
-                "Could not find QueryDefinitionCollection variable '%s'",
-                ContentView::QUERY_DEFINITION_COLLECTION_NAME,
-            ),
-        );
+        if (!isset($context[ContentView::QUERY_DEFINITION_COLLECTION_NAME])) {
+            throw new RuntimeError(
+                sprintf(
+                    "Could not find QueryDefinitionCollection variable '%s'",
+                    ContentView::QUERY_DEFINITION_COLLECTION_NAME,
+                ),
+            );
+        }
+        return $context[ContentView::QUERY_DEFINITION_COLLECTION_NAME];
     }
 }

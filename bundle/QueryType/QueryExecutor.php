@@ -25,24 +25,29 @@ use Pagerfanta\Pagerfanta;
  */
 final class QueryExecutor
 {
-    public function __construct(
+    private QueryTypeRegistry $queryTypeRegistry;
+    private FilterService $filterService;
+    private FindService $findService;
+    private Repository $repository;
+    public function __construct(QueryTypeRegistry $queryTypeRegistry, FilterService $filterService, FindService $findService, Repository $repository)
+    {
         /**
          * @readonly
          */
-        private QueryTypeRegistry $queryTypeRegistry,
+        $this->queryTypeRegistry = $queryTypeRegistry;
         /**
          * @readonly
          */
-        private FilterService $filterService,
+        $this->filterService = $filterService;
         /**
          * @readonly
          */
-        private FindService $findService,
+        $this->findService = $findService;
         /**
          * @readonly
          */
-        private Repository $repository,
-    ) {}
+        $this->repository = $repository;
+    }
 
     /**
      * Execute the Query with the given $name and return the result.

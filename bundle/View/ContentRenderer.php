@@ -26,25 +26,33 @@ use function sprintf;
  */
 final class ContentRenderer
 {
+    private ContentViewBuilder $viewBuilder;
+    private CoreContentViewBuilder $coreViewBuilder;
+    private ViewRenderer $viewRenderer;
+    private ?LoggerInterface $logger = null;
     public function __construct(
-        /**
-         * @readonly
-         */
-        private ContentViewBuilder $viewBuilder,
-        /**
-         * @readonly
-         */
-        private CoreContentViewBuilder $coreViewBuilder,
-        /**
-         * @readonly
-         */
-        private ViewRenderer $viewRenderer,
-        /**
-         * @readonly
-         */
-        private ?LoggerInterface $logger = null
+        ContentViewBuilder $viewBuilder,
+        CoreContentViewBuilder $coreViewBuilder,
+        ViewRenderer $viewRenderer,
+        ?LoggerInterface $logger = null
     )
     {
+        /**
+         * @readonly
+         */
+        $this->viewBuilder = $viewBuilder;
+        /**
+         * @readonly
+         */
+        $this->coreViewBuilder = $coreViewBuilder;
+        /**
+         * @readonly
+         */
+        $this->viewRenderer = $viewRenderer;
+        /**
+         * @readonly
+         */
+        $this->logger = $logger;
         $this->logger = $logger ?? new NullLogger();
     }
 
@@ -55,7 +63,7 @@ final class ContentRenderer
         ValueObject $value,
         string $viewType,
         array $parameters = [],
-        bool $layout = false,
+        bool $layout = false
     ): string {
         /** @var APIContent|Content $content */
         $content = $this->getContent($value);
@@ -111,7 +119,7 @@ final class ContentRenderer
         ValueObject $value,
         string $viewType,
         array $parameters = [],
-        bool $layout = false,
+        bool $layout = false
     ): string {
         $content = $this->getIbexaContent($value);
         $location = $this->getIbexaLocation($value);

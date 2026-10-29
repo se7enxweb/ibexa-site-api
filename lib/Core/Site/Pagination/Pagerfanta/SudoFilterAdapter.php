@@ -16,17 +16,21 @@ use Netgen\IbexaSiteApi\API\FilterService;
  */
 final class SudoFilterAdapter extends BaseAdapter
 {
+    private FilterService $filterService;
+    private Repository $repository;
     public function __construct(
         Query $query,
-        /**
-         * @readonly
-         */
-        private FilterService $filterService,
-        /**
-         * @readonly
-         */
-        private Repository $repository,
+        FilterService $filterService,
+        Repository $repository
     ) {
+        /**
+         * @readonly
+         */
+        $this->filterService = $filterService;
+        /**
+         * @readonly
+         */
+        $this->repository = $repository;
         parent::__construct($query);
     }
 

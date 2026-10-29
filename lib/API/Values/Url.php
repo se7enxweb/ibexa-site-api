@@ -16,9 +16,15 @@ use Netgen\IbexaSiteApi\API\Routing\UrlGenerator;
 final class Url
 {
     private UrlGenerator $urlGenerator;
-    private Content|Location $object;
+    /**
+     * @var \Netgen\IbexaSiteApi\API\Values\Content|\Netgen\IbexaSiteApi\API\Values\Location
+     */
+    private $object;
 
-    public function __construct(UrlGenerator $urlGenerator, Content|Location $object)
+    /**
+     * @param \Netgen\IbexaSiteApi\API\Values\Content|\Netgen\IbexaSiteApi\API\Values\Location $object
+     */
+    public function __construct(UrlGenerator $urlGenerator, $object)
     {
         $this->urlGenerator = $urlGenerator;
         $this->object = $object;

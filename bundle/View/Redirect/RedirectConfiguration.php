@@ -6,28 +6,40 @@ namespace Netgen\Bundle\IbexaSiteApiBundle\View\Redirect;
 
 final class RedirectConfiguration
 {
-    public function __construct(
+    /**
+     * @var mixed
+     */
+    private $target;
+    private array $targetParameters;
+    private bool $permanent;
+    private bool $keepRequestMethod;
+    private bool $absolute;
+    /**
+     * @param mixed $target
+     */
+    public function __construct($target, array $targetParameters, bool $permanent, bool $keepRequestMethod, bool $absolute)
+    {
         /**
          * @readonly
          */
-        private mixed $target,
+        $this->target = $target;
         /**
          * @readonly
          */
-        private array $targetParameters,
+        $this->targetParameters = $targetParameters;
         /**
          * @readonly
          */
-        private bool $permanent,
+        $this->permanent = $permanent;
         /**
          * @readonly
          */
-        private bool $keepRequestMethod,
+        $this->keepRequestMethod = $keepRequestMethod;
         /**
          * @readonly
          */
-        private bool $absolute,
-    ) {}
+        $this->absolute = $absolute;
+    }
 
     public static function fromConfigurationArray(array $config): self
     {
@@ -40,7 +52,10 @@ final class RedirectConfiguration
         );
     }
 
-    public function getTarget(): mixed
+    /**
+     * @return mixed
+     */
+    public function getTarget()
     {
         return $this->target;
     }

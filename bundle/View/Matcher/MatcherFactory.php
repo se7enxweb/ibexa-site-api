@@ -17,32 +17,42 @@ use function str_starts_with;
 
 class MatcherFactory extends ClassNameMatcherFactory
 {
+    private ?ViewMatcherRegistry $viewMatcherRegistry;
+    private ConfigResolverInterface $configResolver;
+    private string $parameterName;
+    private ?string $namespace = null;
+    private ?string $scope = null;
     use ContainerAwareTrait;
 
     public function __construct(
         Repository $repository,
         string $relativeNamespace,
-        /**
-         * @readonly
-         */
-        private ?ViewMatcherRegistry $viewMatcherRegistry,
-        /**
-         * @readonly
-         */
-        private ConfigResolverInterface $configResolver,
-        /**
-         * @readonly
-         */
-        private string $parameterName,
-        /**
-         * @readonly
-         */
-        private ?string $namespace = null,
-        /**
-         * @readonly
-         */
-        private ?string $scope = null,
+        ?ViewMatcherRegistry $viewMatcherRegistry,
+        ConfigResolverInterface $configResolver,
+        string $parameterName,
+        ?string $namespace = null,
+        ?string $scope = null
     ) {
+        /**
+         * @readonly
+         */
+        $this->viewMatcherRegistry = $viewMatcherRegistry;
+        /**
+         * @readonly
+         */
+        $this->configResolver = $configResolver;
+        /**
+         * @readonly
+         */
+        $this->parameterName = $parameterName;
+        /**
+         * @readonly
+         */
+        $this->namespace = $namespace;
+        /**
+         * @readonly
+         */
+        $this->scope = $scope;
         parent::__construct($repository, $relativeNamespace);
     }
 
@@ -59,7 +69,7 @@ class MatcherFactory extends ClassNameMatcherFactory
      */
     protected function getMatcher($matcherIdentifier): ViewMatcherInterface
     {
-        if ($this->viewMatcherRegistry !== null && str_starts_with($matcherIdentifier, '@')) {
+        if ($this->viewMatcherRegistry !== null && strncmp($matcherIdentifier, '@', strlen('@')) === 0) {
             return $this->viewMatcherRegistry->getMatcher(mb_substr($matcherIdentifier, 1));
         }
 

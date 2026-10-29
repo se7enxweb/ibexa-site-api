@@ -28,16 +28,19 @@ use Netgen\IbexaSiteApi\API\FindService;
  */
 final class FindServiceAdapter implements SearchService
 {
-    public function __construct(
+    private FindService $findService;
+    private Handler $searchHandler;
+    public function __construct(FindService $findService, Handler $searchHandler)
+    {
         /**
          * @readonly
          */
-        private FindService $findService,
+        $this->findService = $findService;
         /**
          * @readonly
          */
-        private Handler $searchHandler,
-    ) {}
+        $this->searchHandler = $searchHandler;
+    }
 
     public function findContent(Query $query, array $languageFilter = [], bool $filterOnUserPermissions = true): SearchResult
     {

@@ -19,21 +19,27 @@ use Psr\Log\NullLogger;
  */
 class NamedObjectRuntime
 {
+    private Provider $namedObjectProvider;
+    private bool $isDebug;
+    private ?LoggerInterface $logger = null;
     public function __construct(
-        /**
-         * @readonly
-         */
-        private Provider $namedObjectProvider,
-        /**
-         * @readonly
-         */
-        private bool $isDebug,
-        /**
-         * @readonly
-         */
-        private ?LoggerInterface $logger = null
+        Provider $namedObjectProvider,
+        bool $isDebug,
+        ?LoggerInterface $logger = null
     )
     {
+        /**
+         * @readonly
+         */
+        $this->namedObjectProvider = $namedObjectProvider;
+        /**
+         * @readonly
+         */
+        $this->isDebug = $isDebug;
+        /**
+         * @readonly
+         */
+        $this->logger = $logger;
         $this->logger = $logger ?? new NullLogger();
     }
 

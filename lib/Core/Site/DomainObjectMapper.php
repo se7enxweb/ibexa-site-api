@@ -33,6 +33,11 @@ use function sprintf;
  */
 final class DomainObjectMapper
 {
+    private SiteInterface $site;
+    private Repository $repository;
+    private UrlGenerator $urlGenerator;
+    private bool $failOnMissingField;
+    private LoggerInterface $logger;
     /**
      * @readonly
      */
@@ -43,27 +48,32 @@ final class DomainObjectMapper
     private ContentTypeService $contentTypeService;
 
     public function __construct(
-        /**
-         * @readonly
-         */
-        private SiteInterface $site,
-        /**
-         * @readonly
-         */
-        private Repository $repository,
-        /**
-         * @readonly
-         */
-        private UrlGenerator $urlGenerator,
-        /**
-         * @readonly
-         */
-        private bool $failOnMissingField,
-        /**
-         * @readonly
-         */
-        private LoggerInterface $logger,
+        SiteInterface $site,
+        Repository $repository,
+        UrlGenerator $urlGenerator,
+        bool $failOnMissingField,
+        LoggerInterface $logger
     ) {
+        /**
+         * @readonly
+         */
+        $this->site = $site;
+        /**
+         * @readonly
+         */
+        $this->repository = $repository;
+        /**
+         * @readonly
+         */
+        $this->urlGenerator = $urlGenerator;
+        /**
+         * @readonly
+         */
+        $this->failOnMissingField = $failOnMissingField;
+        /**
+         * @readonly
+         */
+        $this->logger = $logger;
         $this->contentTypeService = $repository->getContentTypeService();
         $this->fieldTypeService = $repository->getFieldTypeService();
     }
@@ -130,12 +140,18 @@ final class DomainObjectMapper
         );
     }
 
-    public function mapPath(Content|Location $object): Path
+    /**
+     * @param \Netgen\IbexaSiteApi\Core\Site\Values\Content|\Netgen\IbexaSiteApi\Core\Site\Values\Location $object
+     */
+    public function mapPath($object): Path
     {
         return new Path($this->urlGenerator, $object);
     }
 
-    public function mapUrl(Content|Location $object): Url
+    /**
+     * @param \Netgen\IbexaSiteApi\Core\Site\Values\Content|\Netgen\IbexaSiteApi\Core\Site\Values\Location $object
+     */
+    public function mapUrl($object): Url
     {
         return new Url($this->urlGenerator, $object);
     }

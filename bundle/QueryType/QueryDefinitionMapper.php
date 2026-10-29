@@ -24,22 +24,26 @@ use function sprintf;
  */
 final class QueryDefinitionMapper
 {
+    private QueryTypeRegistry $queryTypeRegistry;
+    private ParameterProcessor $parameterProcessor;
+    private ConfigResolverInterface $configResolver;
     private ?array $namedQueryConfiguration = null;
 
-    public function __construct(
+    public function __construct(QueryTypeRegistry $queryTypeRegistry, ParameterProcessor $parameterProcessor, ConfigResolverInterface $configResolver)
+    {
         /**
          * @readonly
          */
-        private QueryTypeRegistry $queryTypeRegistry,
+        $this->queryTypeRegistry = $queryTypeRegistry;
         /**
          * @readonly
          */
-        private ParameterProcessor $parameterProcessor,
+        $this->parameterProcessor = $parameterProcessor;
         /**
          * @readonly
          */
-        private ConfigResolverInterface $configResolver,
-    ) {}
+        $this->configResolver = $configResolver;
+    }
 
     /**
      * Map given $configuration in $view context to a QueryDefinition instance.
@@ -79,10 +83,12 @@ final class QueryDefinitionMapper
     private function getQueryConfigurationByName(string $name): array
     {
         $this->setNamedQueryConfiguration();
-
-        return $this->namedQueryConfiguration[$name] ?? throw new OutOfBoundsException(
-            sprintf("Could not find query configuration named '%s'", $name),
-        );
+        if (!isset($this->namedQueryConfiguration[$name])) {
+            throw new OutOfBoundsException(
+                sprintf("Could not find query configuration named '%s'", $name),
+            );
+        }
+        return $this->namedQueryConfiguration[$name];
     }
 
     private function setNamedQueryConfiguration(): void

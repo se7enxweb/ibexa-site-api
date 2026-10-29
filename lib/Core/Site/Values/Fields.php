@@ -28,6 +28,10 @@ use function sprintf;
  */
 final class Fields extends APIFields
 {
+    private SiteContent $content;
+    private DomainObjectMapper $domainObjectMapper;
+    private bool $failOnMissingField;
+    private LoggerInterface $logger;
     private bool $areFieldsInitialized = false;
 
     private ?ArrayIterator $iterator = null;
@@ -41,24 +45,25 @@ final class Fields extends APIFields
     /** @var \Netgen\IbexaSiteApi\API\Values\Field[] */
     private array $fieldsByNumericSequence = [];
 
-    public function __construct(
+    public function __construct(SiteContent $content, DomainObjectMapper $domainObjectMapper, bool $failOnMissingField, LoggerInterface $logger)
+    {
         /**
          * @readonly
          */
-        private SiteContent $content,
+        $this->content = $content;
         /**
          * @readonly
          */
-        private DomainObjectMapper $domainObjectMapper,
+        $this->domainObjectMapper = $domainObjectMapper;
         /**
          * @readonly
          */
-        private bool $failOnMissingField,
+        $this->failOnMissingField = $failOnMissingField;
         /**
          * @readonly
          */
-        private LoggerInterface $logger,
-    ) {}
+        $this->logger = $logger;
+    }
 
     public function getIterator(): Traversable
     {

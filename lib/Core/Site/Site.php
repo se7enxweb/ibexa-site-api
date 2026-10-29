@@ -31,6 +31,13 @@ use Psr\Log\NullLogger;
  */
 class Site implements SiteInterface
 {
+    private BaseSettings $settings;
+    private APILanguageResolver $languageResolver;
+    private Repository $repository;
+    private SearchService $filteringSearchService;
+    private RelationResolverRegistry $relationResolverRegistry;
+    private UrlGenerator $urlGenerator;
+    private ?LoggerInterface $logger = null;
     /**
      * @readonly
      */
@@ -51,35 +58,42 @@ class Site implements SiteInterface
     private ?APIRelationService $relationService = null;
 
     public function __construct(
-        /**
-         * @readonly
-         */
-        private BaseSettings $settings,
-        /**
-         * @readonly
-         */
-        private APILanguageResolver $languageResolver,
-        /**
-         * @readonly
-         */
-        private Repository $repository,
-        /**
-         * @readonly
-         */
-        private SearchService $filteringSearchService,
-        /**
-         * @readonly
-         */
-        private RelationResolverRegistry $relationResolverRegistry,
-        /**
-         * @readonly
-         */
-        private UrlGenerator $urlGenerator,
-        /**
-         * @readonly
-         */
-        private ?LoggerInterface $logger = null,
+        BaseSettings $settings,
+        APILanguageResolver $languageResolver,
+        Repository $repository,
+        SearchService $filteringSearchService,
+        RelationResolverRegistry $relationResolverRegistry,
+        UrlGenerator $urlGenerator,
+        ?LoggerInterface $logger = null
     ) {
+        /**
+         * @readonly
+         */
+        $this->settings = $settings;
+        /**
+         * @readonly
+         */
+        $this->languageResolver = $languageResolver;
+        /**
+         * @readonly
+         */
+        $this->repository = $repository;
+        /**
+         * @readonly
+         */
+        $this->filteringSearchService = $filteringSearchService;
+        /**
+         * @readonly
+         */
+        $this->relationResolverRegistry = $relationResolverRegistry;
+        /**
+         * @readonly
+         */
+        $this->urlGenerator = $urlGenerator;
+        /**
+         * @readonly
+         */
+        $this->logger = $logger;
         $this->logger = $logger ?? new NullLogger();
         $this->contentService = $repository->getContentService();
         $this->locationService = $repository->getLocationService();

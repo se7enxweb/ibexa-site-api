@@ -25,13 +25,15 @@ use function sprintf;
  */
 final class Siblings extends Location
 {
+    private ?LoggerInterface $logger = null;
     public function __construct(
         Settings $settings,
+        ?LoggerInterface $logger = null
+    ) {
         /**
          * @readonly
          */
-        private ?LoggerInterface $logger = null,
-    ) {
+        $this->logger = $logger;
         $this->logger = $logger ?? new NullLogger();
         parent::__construct($settings);
     }

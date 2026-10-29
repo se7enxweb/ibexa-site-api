@@ -39,12 +39,15 @@ final class QueryDefinitionCollection
      */
     public function get(string $name): QueryDefinition
     {
-        return $this->queryDefinitionMap[$name] ?? throw new OutOfBoundsException(
-            sprintf(
-                "Could not find QueryDefinition with name '%s'",
-                $name,
-            ),
-        );
+        if (!isset($this->queryDefinitionMap[$name])) {
+            throw new OutOfBoundsException(
+                sprintf(
+                    "Could not find QueryDefinition with name '%s'",
+                    $name,
+                ),
+            );
+        }
+        return $this->queryDefinitionMap[$name];
     }
 
     /**

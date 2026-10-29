@@ -10,13 +10,15 @@ use Ibexa\Core\MVC\Symfony\View\View;
 
 final class CoreOverride extends CoreConfigured
 {
+    private ContentViewFallbackResolver $contentViewFallbackResolver;
     public function __construct(
         MatcherFactoryInterface $matcherFactory,
+        ContentViewFallbackResolver $contentViewFallbackResolver
+    ) {
         /**
          * @readonly
          */
-        private ContentViewFallbackResolver $contentViewFallbackResolver,
-    ) {
+        $this->contentViewFallbackResolver = $contentViewFallbackResolver;
         parent::__construct($matcherFactory);
     }
 

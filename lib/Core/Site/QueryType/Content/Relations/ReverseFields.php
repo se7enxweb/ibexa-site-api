@@ -33,7 +33,10 @@ final class ReverseFields extends Content
         $resolver->setAllowedTypes('relation_field', ['string', 'string[]']);
     }
 
-    protected function getFilterCriteria(array $parameters): null|array|Criterion
+    /**
+     * @return null|mixed[]|\Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion
+     */
+    protected function getFilterCriteria(array $parameters)
     {
         $fields = (array) $parameters['relation_field'];
 

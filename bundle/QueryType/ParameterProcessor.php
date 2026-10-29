@@ -18,33 +18,40 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 final class ParameterProcessor
 {
+    private ExpressionLanguage $expressionLanguage;
+    private RequestStack $requestStack;
+    private ConfigResolverInterface $configResolver;
+    private Provider $namedObjectProvider;
     use LanguageExpressionEvaluatorTrait;
 
-    public function __construct(
+    public function __construct(ExpressionLanguage $expressionLanguage, RequestStack $requestStack, ConfigResolverInterface $configResolver, Provider $namedObjectProvider)
+    {
         /**
          * @readonly
          */
-        private ExpressionLanguage $expressionLanguage,
+        $this->expressionLanguage = $expressionLanguage;
         /**
          * @readonly
          */
-        private RequestStack $requestStack,
+        $this->requestStack = $requestStack;
         /**
          * @readonly
          */
-        private ConfigResolverInterface $configResolver,
+        $this->configResolver = $configResolver;
         /**
          * @readonly
          */
-        private Provider $namedObjectProvider,
-    ) {}
+        $this->namedObjectProvider = $namedObjectProvider;
+    }
 
     /**
      * Return given $value processed with ExpressionLanguage if needed.
      *
      * Parameter $view is used to provide values for evaluation.
+     * @param mixed $value
+     * @return mixed
      */
-    public function process(mixed $value, ContentView $view): mixed
+    public function process($value, ContentView $view)
     {
         return $this->evaluate(
             $value,

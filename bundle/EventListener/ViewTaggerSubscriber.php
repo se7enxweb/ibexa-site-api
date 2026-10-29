@@ -11,12 +11,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ViewTaggerSubscriber implements EventSubscriberInterface
 {
-    public function __construct(
+    private ResponseTagger $responseTagger;
+    public function __construct(ResponseTagger $responseTagger)
+    {
         /**
          * @readonly
          */
-        private ResponseTagger $responseTagger,
-    ) {}
+        $this->responseTagger = $responseTagger;
+    }
 
     public static function getSubscribedEvents(): array
     {

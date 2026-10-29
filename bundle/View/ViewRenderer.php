@@ -30,28 +30,34 @@ use function sprintf;
  */
 final class ViewRenderer
 {
-    public function __construct(
+    private RequestStack $requestStack;
+    private ControllerResolverInterface $controllerResolver;
+    private ArgumentResolverInterface $argumentResolver;
+    private Renderer $coreViewRenderer;
+    private EventDispatcherInterface $eventDispatcher;
+    public function __construct(RequestStack $requestStack, ControllerResolverInterface $controllerResolver, ArgumentResolverInterface $argumentResolver, Renderer $coreViewRenderer, EventDispatcherInterface $eventDispatcher)
+    {
         /**
          * @readonly
          */
-        private RequestStack $requestStack,
+        $this->requestStack = $requestStack;
         /**
          * @readonly
          */
-        private ControllerResolverInterface $controllerResolver,
+        $this->controllerResolver = $controllerResolver;
         /**
          * @readonly
          */
-        private ArgumentResolverInterface $argumentResolver,
+        $this->argumentResolver = $argumentResolver;
         /**
          * @readonly
          */
-        private Renderer $coreViewRenderer,
+        $this->coreViewRenderer = $coreViewRenderer;
         /**
          * @readonly
          */
-        private EventDispatcherInterface $eventDispatcher,
-    ) {}
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     public function render(View $view, array $parameters, bool $layout): string
     {

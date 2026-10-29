@@ -28,26 +28,31 @@ use function sprintf;
  */
 final class Loading extends Provider
 {
+    private LoadService $loadService;
+    private ?TagsService $tagsService;
+    private ParameterProcessor $parameterProcessor;
+    private ConfigResolverInterface $configResolver;
     private ?array $configuration = null;
 
-    public function __construct(
+    public function __construct(LoadService $loadService, ?TagsService $tagsService, ParameterProcessor $parameterProcessor, ConfigResolverInterface $configResolver)
+    {
         /**
          * @readonly
          */
-        private LoadService $loadService,
+        $this->loadService = $loadService;
         /**
          * @readonly
          */
-        private ?TagsService $tagsService,
+        $this->tagsService = $tagsService;
         /**
          * @readonly
          */
-        private ParameterProcessor $parameterProcessor,
+        $this->parameterProcessor = $parameterProcessor;
         /**
          * @readonly
          */
-        private ConfigResolverInterface $configResolver,
-    ) {}
+        $this->configResolver = $configResolver;
+    }
 
     public function hasContent(string $name): bool
     {
@@ -143,21 +148,30 @@ final class Loading extends Provider
         );
     }
 
-    private function getContentId(string $name): mixed
+    /**
+     * @return mixed
+     */
+    private function getContentId(string $name)
     {
         $this->setConfiguration();
 
         return $this->parameterProcessor->process($this->configuration['content'][$name] ?? null);
     }
 
-    private function getLocationId(string $name): mixed
+    /**
+     * @return mixed
+     */
+    private function getLocationId(string $name)
     {
         $this->setConfiguration();
 
         return $this->parameterProcessor->process($this->configuration['locations'][$name] ?? null);
     }
 
-    private function getTagId(string $name): mixed
+    /**
+     * @return mixed
+     */
+    private function getTagId(string $name)
     {
         $this->setConfiguration();
 

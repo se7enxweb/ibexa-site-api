@@ -32,11 +32,13 @@ final class CriterionDefinition extends ValueObject
 
     /**
      * Optional operator.
+     * @var mixed
      */
-    protected mixed $operator;
+    protected $operator;
 
     /**
      * Mandatory value.
+     * @var mixed
      */
-    protected mixed $value;
+    protected $value;
 }

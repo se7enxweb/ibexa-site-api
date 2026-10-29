@@ -17,15 +17,17 @@ use Twig\Template;
 
 final class GetAttrExpressionDecorator extends GetAttrExpression
 {
+    private GetAttrExpression $decoratedExpression;
     /** @noinspection MagicMethodsValidityInspection */
 
     /** @noinspection PhpMissingParentConstructorInspection */
-    public function __construct(
+    public function __construct(GetAttrExpression $decoratedExpression)
+    {
         /**
          * @readonly
          */
-        private GetAttrExpression $decoratedExpression,
-    ) {}
+        $this->decoratedExpression = $decoratedExpression;
+    }
 
     public function __toString(): string
     {
@@ -167,18 +169,20 @@ final class GetAttrExpressionDecorator extends GetAttrExpression
      * @param bool $ignoreStrictCheck
      * @param bool $sandboxed
      * @param int $lineno
+     * @param mixed $object
+     * @param mixed $item
      */
     public static function twigGetAttribute(
         Environment $env,
         Source $source,
-        mixed $object,
-        mixed $item,
+        $object,
+        $item,
         array $arguments = [],
         $type = 'any',
         $isDefinedTest = false,
         $ignoreStrictCheck = false,
         $sandboxed = false,
-        $lineno = -1,
+        $lineno = -1
     ) {
         if (!$object instanceof Fields) {
             return CoreExtension::getAttribute(

@@ -20,13 +20,15 @@ use function array_merge;
  */
 final class ForwardFields extends Content
 {
+    private RelationResolverRegistry $relationResolverRegistry;
     public function __construct(
         Settings $settings,
+        RelationResolverRegistry $relationResolverRegistry
+    ) {
         /**
          * @readonly
          */
-        private RelationResolverRegistry $relationResolverRegistry,
-    ) {
+        $this->relationResolverRegistry = $relationResolverRegistry;
         parent::__construct($settings);
     }
 
@@ -46,7 +48,10 @@ final class ForwardFields extends Content
         $resolver->setAllowedTypes('relation_field', ['string', 'string[]']);
     }
 
-    protected function getFilterCriteria(array $parameters): null|array|Criterion
+    /**
+     * @return null|mixed[]|\Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion
+     */
+    protected function getFilterCriteria(array $parameters)
     {
         /** @var \Netgen\IbexaSiteApi\API\Values\Content $content */
         $content = $parameters['content'];

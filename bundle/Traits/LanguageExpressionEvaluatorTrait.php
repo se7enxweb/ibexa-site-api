@@ -23,12 +23,14 @@ trait LanguageExpressionEvaluatorTrait
      * Return given $value processed with ExpressionLanguage if needed.
      *
      * Parameter $view is used to provide values for evaluation.
+     * @param mixed $value
+     * @return mixed
      */
     protected function evaluate(
-        mixed $value,
+        $value,
         ExpressionLanguage $expressionLanguage,
-        array $values,
-    ): mixed {
+        array $values
+    ) {
         if (is_array($value)) {
             return $this->evaluateParameters($value, $expressionLanguage, $values);
         }
@@ -51,7 +53,7 @@ trait LanguageExpressionEvaluatorTrait
     private function evaluateParameters(
         array $parameters,
         ExpressionLanguage $expressionLanguage,
-        array $values,
+        array $values
     ): array {
         $processedParameters = [];
 
@@ -66,9 +68,12 @@ trait LanguageExpressionEvaluatorTrait
         return $processedParameters;
     }
 
-    private function isExpression(mixed $value): bool
+    /**
+     * @param mixed $value
+     */
+    private function isExpression($value): bool
     {
-        return is_string($value) && str_starts_with($value, self::$expressionMarker);
+        return is_string($value) && strncmp($value, self::$expressionMarker, strlen(self::$expressionMarker)) === 0;
     }
 
     private function extractExpression(string $value): string

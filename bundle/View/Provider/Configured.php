@@ -29,28 +29,34 @@ use function sprintf;
  */
 class Configured implements ViewProvider
 {
-    public function __construct(
+    private MatcherFactoryInterface $matcherFactory;
+    private QueryDefinitionMapper $queryDefinitionMapper;
+    private Resolver $redirectResolver;
+    private ContentViewFallbackResolver $contentViewFallbackResolver;
+    private ParameterProcessor $parameterProcessor;
+    public function __construct(MatcherFactoryInterface $matcherFactory, QueryDefinitionMapper $queryDefinitionMapper, Resolver $redirectResolver, ContentViewFallbackResolver $contentViewFallbackResolver, ParameterProcessor $parameterProcessor)
+    {
         /**
          * @readonly
          */
-        private MatcherFactoryInterface $matcherFactory,
+        $this->matcherFactory = $matcherFactory;
         /**
          * @readonly
          */
-        private QueryDefinitionMapper $queryDefinitionMapper,
+        $this->queryDefinitionMapper = $queryDefinitionMapper;
         /**
          * @readonly
          */
-        private Resolver $redirectResolver,
+        $this->redirectResolver = $redirectResolver;
         /**
          * @readonly
          */
-        private ContentViewFallbackResolver $contentViewFallbackResolver,
+        $this->contentViewFallbackResolver = $contentViewFallbackResolver;
         /**
          * @readonly
          */
-        private ParameterProcessor $parameterProcessor,
-    ) {}
+        $this->parameterProcessor = $parameterProcessor;
+    }
 
     /**
      * Returns view as a data transfer object.

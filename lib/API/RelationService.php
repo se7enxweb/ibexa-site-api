@@ -19,7 +19,7 @@ interface RelationService
     public function loadFieldRelation(
         Content $content,
         string $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = [],
+        array $contentTypeIdentifiers = []
     ): ?Content;
 
     /**
@@ -32,7 +32,7 @@ interface RelationService
         Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
-        ?int $limit = null,
+        ?int $limit = null
     ): array;
 
     /**
@@ -44,7 +44,7 @@ interface RelationService
     public function loadFieldRelationLocation(
         Content $content,
         string $fieldDefinitionIdentifier,
-        array $contentTypeIdentifiers = [],
+        array $contentTypeIdentifiers = []
     ): ?Location;
 
     /**
@@ -59,7 +59,7 @@ interface RelationService
         Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
-        ?int $limit = null,
+        ?int $limit = null
     ): array;
 
     /**
@@ -72,7 +72,7 @@ interface RelationService
         Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
-        ?int $limit = null,
+        ?int $limit = null
     ): array;
 
     /**
@@ -87,6 +87,6 @@ interface RelationService
         Content $content,
         string $fieldDefinitionIdentifier,
         array $contentTypeIdentifiers = [],
-        ?int $limit = null,
+        ?int $limit = null
     ): array;
 }

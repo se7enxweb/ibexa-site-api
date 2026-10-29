@@ -32,32 +32,38 @@ use function str_contains;
  */
 class ContentViewBuilder implements ViewBuilder
 {
-    public function __construct(
+    private Site $site;
+    private Repository $repository;
+    private Configurator $viewConfigurator;
+    private ParametersInjector $viewParametersInjector;
+    private LocationResolver $locationResolver;
+    public function __construct(Site $site, Repository $repository, Configurator $viewConfigurator, ParametersInjector $viewParametersInjector, LocationResolver $locationResolver)
+    {
         /**
          * @readonly
          */
-        private Site $site,
+        $this->site = $site;
         /**
          * @readonly
          */
-        private Repository $repository,
+        $this->repository = $repository;
         /**
          * @readonly
          */
-        private Configurator $viewConfigurator,
+        $this->viewConfigurator = $viewConfigurator;
         /**
          * @readonly
          */
-        private ParametersInjector $viewParametersInjector,
+        $this->viewParametersInjector = $viewParametersInjector;
         /**
          * @readonly
          */
-        private LocationResolver $locationResolver,
-    ) {}
+        $this->locationResolver = $locationResolver;
+    }
 
     public function matches($argument): bool
     {
-        return is_string($argument) && str_contains($argument, 'ng_content:');
+        return is_string($argument) && strpos($argument, 'ng_content:') !== false;
     }
 
     /**
@@ -110,7 +116,7 @@ class ContentViewBuilder implements ViewBuilder
         if ($location === null) {
             try {
                 $location = $this->locationResolver->getLocation($content);
-            } catch (NotFoundException) {
+            } catch (NotFoundException $exception) {
                 // do nothing
             }
         }

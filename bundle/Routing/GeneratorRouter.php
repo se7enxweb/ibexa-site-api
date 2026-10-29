@@ -45,32 +45,44 @@ use function str_starts_with;
  */
 class GeneratorRouter implements ChainedRouterInterface, RequestMatcherInterface
 {
+    private Repository $repository;
+    private UrlAliasGenerator $generator;
+    private Resolver $siteaccessResolver;
+    private ConfigResolverInterface $configResolver;
+    private RequestContext $requestContext;
+    private ?LoggerInterface $logger = null;
     private SiteAccess $currentSiteaccess;
 
     public function __construct(
-        /**
-         * @readonly
-         */
-        private Repository $repository,
-        /**
-         * @readonly
-         */
-        private UrlAliasGenerator $generator,
-        /**
-         * @readonly
-         */
-        private Resolver $siteaccessResolver,
-        /**
-         * @readonly
-         */
-        private ConfigResolverInterface $configResolver,
-        private RequestContext $requestContext,
-        /**
-         * @readonly
-         */
-        private ?LoggerInterface $logger = null
+        Repository $repository,
+        UrlAliasGenerator $generator,
+        Resolver $siteaccessResolver,
+        ConfigResolverInterface $configResolver,
+        RequestContext $requestContext,
+        ?LoggerInterface $logger = null
     )
     {
+        /**
+         * @readonly
+         */
+        $this->repository = $repository;
+        /**
+         * @readonly
+         */
+        $this->generator = $generator;
+        /**
+         * @readonly
+         */
+        $this->siteaccessResolver = $siteaccessResolver;
+        /**
+         * @readonly
+         */
+        $this->configResolver = $configResolver;
+        $this->requestContext = $requestContext;
+        /**
+         * @readonly
+         */
+        $this->logger = $logger;
         $this->logger = $logger ?? new NullLogger();
     }
 
@@ -83,7 +95,7 @@ class GeneratorRouter implements ChainedRouterInterface, RequestMatcherInterface
     public function generate(
         string $name,
         array $parameters = [],
-        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH,
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ): string {
         $location = $this->resolveLocation($name, $parameters);
 
@@ -194,7 +206,7 @@ class GeneratorRouter implements ChainedRouterInterface, RequestMatcherInterface
             $prefix = $this->getUrlPrefix();
             $prefixLength = mb_strlen($prefix);
 
-            if (str_starts_with($url, $prefix)) {
+            if (strncmp($url, $prefix, strlen($prefix)) === 0) {
                 return mb_substr($url, $prefixLength);
             }
 
@@ -313,7 +325,10 @@ class GeneratorRouter implements ChainedRouterInterface, RequestMatcherInterface
         );
     }
 
-    private function resolveLocationFromRouteObject(mixed $object): APILocation
+    /**
+     * @param mixed $object
+     */
+    private function resolveLocationFromRouteObject($object): APILocation
     {
         if ($object instanceof Location) {
             return $object->innerLocation;
@@ -344,8 +359,11 @@ class GeneratorRouter implements ChainedRouterInterface, RequestMatcherInterface
 
     private function checkContentLocation(?APILocation $location): APILocation
     {
-        return $location ?? throw new LogicException(
-            'Cannot generate an UrlAlias route for Content without the main Location',
-        );
+        if (!isset($location)) {
+            throw new LogicException(
+                'Cannot generate an UrlAlias route for Content without the main Location',
+            );
+        }
+        return $location;
     }
 }

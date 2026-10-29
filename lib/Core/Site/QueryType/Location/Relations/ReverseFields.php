@@ -40,7 +40,10 @@ final class ReverseFields extends Location
         ]);
     }
 
-    protected function getFilterCriteria(array $parameters): null|array|Criterion
+    /**
+     * @return null|mixed[]|\Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion
+     */
+    protected function getFilterCriteria(array $parameters)
     {
         $fields = (array) $parameters['relation_field'];
 

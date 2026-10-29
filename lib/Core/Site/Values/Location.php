@@ -32,6 +32,7 @@ use function sprintf;
 
 final class Location extends APILocation
 {
+    private LoggerInterface $logger;
     protected RepoLocation $innerLocation;
     /**
      * @readonly
@@ -57,11 +58,12 @@ final class Location extends APILocation
 
     public function __construct(
         array $properties,
+        LoggerInterface $logger
+    ) {
         /**
          * @readonly
          */
-        private LoggerInterface $logger,
-    ) {
+        $this->logger = $logger;
         $this->site = $properties['site'];
         $this->domainObjectMapper = $properties['domainObjectMapper'];
         $this->innerVersionInfo = $properties['innerVersionInfo'];
