@@ -63,14 +63,20 @@ class ContentView extends BaseView implements ContentValueView, LocationValueVie
         return $this->location;
     }
 
-    public function setContent(): never
+    /**
+     * @return never
+     */
+    public function setContent()
     {
         throw new RuntimeException(
             'Method setContent() cannot be used with Site API content view. Use setSiteContent() method instead.',
         );
     }
 
-    public function setLocation(): never
+    /**
+     * @return never
+     */
+    public function setLocation()
     {
         throw new RuntimeException(
             'Method setLocation() cannot be used with Site API content view. Use setSiteLocation() method instead.',

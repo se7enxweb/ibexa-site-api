@@ -1,5 +1,5 @@
 {
-    "name": "netgen/ibexa-site-api",
+    "name": "se7enxweb/ibexa-site-api",
     "description": "Netgen's Site API for Ibexa CMS",
     "type": "ibexa-bundle",
     "license": "GPL-2.0-only",
@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.0",
         "ext-dom": "*",
         "ibexa/core": "^4.6.19",
         "ibexa/http-cache": "^4.6",
@@ -27,7 +27,8 @@
         "composer/package-versions-deprecated": "*"
     },
     "replace": {
-        "netgen/ezplatform-site-api": "*"
+        "netgen/ezplatform-site-api": "*",
+        "netgen/ibexa-site-api": "self.version"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

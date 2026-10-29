@@ -27,8 +27,12 @@ final class Siblings extends Location
 {
     public function __construct(
         Settings $settings,
-        private readonly LoggerInterface $logger = new NullLogger(),
+        /**
+         * @readonly
+         */
+        private ?LoggerInterface $logger = null,
     ) {
+        $this->logger = $logger ?? new NullLogger();
         parent::__construct($settings);
     }
 

@@ -30,11 +30,26 @@ use function sprintf;
 class Configured implements ViewProvider
 {
     public function __construct(
-        private readonly MatcherFactoryInterface $matcherFactory,
-        private readonly QueryDefinitionMapper $queryDefinitionMapper,
-        private readonly Resolver $redirectResolver,
-        private readonly ContentViewFallbackResolver $contentViewFallbackResolver,
-        private readonly ParameterProcessor $parameterProcessor,
+        /**
+         * @readonly
+         */
+        private MatcherFactoryInterface $matcherFactory,
+        /**
+         * @readonly
+         */
+        private QueryDefinitionMapper $queryDefinitionMapper,
+        /**
+         * @readonly
+         */
+        private Resolver $redirectResolver,
+        /**
+         * @readonly
+         */
+        private ContentViewFallbackResolver $contentViewFallbackResolver,
+        /**
+         * @readonly
+         */
+        private ParameterProcessor $parameterProcessor,
     ) {}
 
     /**

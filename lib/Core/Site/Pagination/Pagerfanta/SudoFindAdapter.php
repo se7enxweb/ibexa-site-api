@@ -18,8 +18,14 @@ final class SudoFindAdapter extends BaseAdapter
 {
     public function __construct(
         Query $query,
-        private readonly FindService $findService,
-        private readonly Repository $repository,
+        /**
+         * @readonly
+         */
+        private FindService $findService,
+        /**
+         * @readonly
+         */
+        private Repository $repository,
     ) {
         parent::__construct($query);
     }

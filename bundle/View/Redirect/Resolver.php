@@ -23,7 +23,10 @@ use function mb_stripos;
 final class Resolver
 {
     public function __construct(
-        private readonly RouterInterface $router,
+        /**
+         * @readonly
+         */
+        private RouterInterface $router,
     ) {}
 
     /**

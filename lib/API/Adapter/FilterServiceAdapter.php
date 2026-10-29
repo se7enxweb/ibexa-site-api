@@ -29,8 +29,14 @@ use Netgen\IbexaSiteApi\API\FilterService;
 final class FilterServiceAdapter implements SearchService
 {
     public function __construct(
-        private readonly FilterService $filterService,
-        private readonly Handler $searchHandler,
+        /**
+         * @readonly
+         */
+        private FilterService $filterService,
+        /**
+         * @readonly
+         */
+        private Handler $searchHandler,
     ) {}
 
     public function findContent(Query $query, array $languageFilter = [], bool $filterOnUserPermissions = true): SearchResult

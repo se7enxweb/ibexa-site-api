@@ -31,9 +31,18 @@ use Psr\Log\NullLogger;
  */
 class Site implements SiteInterface
 {
-    private readonly ContentService $contentService;
-    private readonly LocationService $locationService;
-    private readonly SearchService $searchService;
+    /**
+     * @readonly
+     */
+    private ContentService $contentService;
+    /**
+     * @readonly
+     */
+    private LocationService $locationService;
+    /**
+     * @readonly
+     */
+    private SearchService $searchService;
 
     private ?DomainObjectMapper $domainObjectMapper = null;
     private ?APIFilterService $filterService = null;
@@ -42,14 +51,36 @@ class Site implements SiteInterface
     private ?APIRelationService $relationService = null;
 
     public function __construct(
-        private readonly BaseSettings $settings,
-        private readonly APILanguageResolver $languageResolver,
-        private readonly Repository $repository,
-        private readonly SearchService $filteringSearchService,
-        private readonly RelationResolverRegistry $relationResolverRegistry,
-        private readonly UrlGenerator $urlGenerator,
-        private readonly LoggerInterface $logger = new NullLogger(),
+        /**
+         * @readonly
+         */
+        private BaseSettings $settings,
+        /**
+         * @readonly
+         */
+        private APILanguageResolver $languageResolver,
+        /**
+         * @readonly
+         */
+        private Repository $repository,
+        /**
+         * @readonly
+         */
+        private SearchService $filteringSearchService,
+        /**
+         * @readonly
+         */
+        private RelationResolverRegistry $relationResolverRegistry,
+        /**
+         * @readonly
+         */
+        private UrlGenerator $urlGenerator,
+        /**
+         * @readonly
+         */
+        private ?LoggerInterface $logger = null,
     ) {
+        $this->logger = $logger ?? new NullLogger();
         $this->contentService = $repository->getContentService();
         $this->locationService = $repository->getLocationService();
         $this->searchService = $repository->getSearchService();

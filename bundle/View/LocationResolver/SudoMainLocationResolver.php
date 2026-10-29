@@ -15,8 +15,14 @@ use Netgen\IbexaSiteApi\API\Values\Location;
 class SudoMainLocationResolver extends LocationResolver
 {
     public function __construct(
-        private readonly Repository $repository,
-        private readonly LoadService $loadService,
+        /**
+         * @readonly
+         */
+        private Repository $repository,
+        /**
+         * @readonly
+         */
+        private LoadService $loadService,
     ) {}
 
     public function getLocation(Content $content): Location

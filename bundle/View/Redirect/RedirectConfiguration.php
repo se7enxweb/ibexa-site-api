@@ -7,11 +7,26 @@ namespace Netgen\Bundle\IbexaSiteApiBundle\View\Redirect;
 final class RedirectConfiguration
 {
     public function __construct(
-        private readonly mixed $target,
-        private readonly array $targetParameters,
-        private readonly bool $permanent,
-        private readonly bool $keepRequestMethod,
-        private readonly bool $absolute,
+        /**
+         * @readonly
+         */
+        private mixed $target,
+        /**
+         * @readonly
+         */
+        private array $targetParameters,
+        /**
+         * @readonly
+         */
+        private bool $permanent,
+        /**
+         * @readonly
+         */
+        private bool $keepRequestMethod,
+        /**
+         * @readonly
+         */
+        private bool $absolute,
     ) {}
 
     public static function fromConfigurationArray(array $config): self

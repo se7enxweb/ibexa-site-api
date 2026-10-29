@@ -17,9 +17,18 @@ use function sprintf;
 class FieldRenderingRuntime
 {
     public function __construct(
-        private readonly Environment $environment,
-        private readonly FieldBlockRenderer $fieldBlockRenderer,
-        private readonly ParameterProviderRegistryInterface $parameterProviderRegistry,
+        /**
+         * @readonly
+         */
+        private Environment $environment,
+        /**
+         * @readonly
+         */
+        private FieldBlockRenderer $fieldBlockRenderer,
+        /**
+         * @readonly
+         */
+        private ParameterProviderRegistryInterface $parameterProviderRegistry,
     ) {}
 
     /**

@@ -18,8 +18,14 @@ final class SudoFilterAdapter extends BaseAdapter
 {
     public function __construct(
         Query $query,
-        private readonly FilterService $filterService,
-        private readonly Repository $repository,
+        /**
+         * @readonly
+         */
+        private FilterService $filterService,
+        /**
+         * @readonly
+         */
+        private Repository $repository,
     ) {
         parent::__construct($query);
     }

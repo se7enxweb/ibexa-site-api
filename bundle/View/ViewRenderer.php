@@ -31,11 +31,26 @@ use function sprintf;
 final class ViewRenderer
 {
     public function __construct(
-        private readonly RequestStack $requestStack,
-        private readonly ControllerResolverInterface $controllerResolver,
-        private readonly ArgumentResolverInterface $argumentResolver,
-        private readonly Renderer $coreViewRenderer,
-        private readonly EventDispatcherInterface $eventDispatcher,
+        /**
+         * @readonly
+         */
+        private RequestStack $requestStack,
+        /**
+         * @readonly
+         */
+        private ControllerResolverInterface $controllerResolver,
+        /**
+         * @readonly
+         */
+        private ArgumentResolverInterface $argumentResolver,
+        /**
+         * @readonly
+         */
+        private Renderer $coreViewRenderer,
+        /**
+         * @readonly
+         */
+        private EventDispatcherInterface $eventDispatcher,
     ) {}
 
     public function render(View $view, array $parameters, bool $layout): string

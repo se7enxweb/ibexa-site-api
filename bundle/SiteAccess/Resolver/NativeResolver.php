@@ -37,9 +37,18 @@ class NativeResolver extends Resolver
     private array $cache = [];
 
     public function __construct(
-        private readonly Handler $persistenceHandler,
-        private readonly int $recursionLimit,
-        private readonly ConfigResolverInterface $configResolver,
+        /**
+         * @readonly
+         */
+        private Handler $persistenceHandler,
+        /**
+         * @readonly
+         */
+        private int $recursionLimit,
+        /**
+         * @readonly
+         */
+        private ConfigResolverInterface $configResolver,
     ) {}
 
     public function setSiteaccess(?SiteAccess $currentSiteAccess = null): void

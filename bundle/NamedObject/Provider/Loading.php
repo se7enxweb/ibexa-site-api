@@ -31,10 +31,22 @@ final class Loading extends Provider
     private ?array $configuration = null;
 
     public function __construct(
-        private readonly LoadService $loadService,
-        private readonly ?TagsService $tagsService,
-        private readonly ParameterProcessor $parameterProcessor,
-        private readonly ConfigResolverInterface $configResolver,
+        /**
+         * @readonly
+         */
+        private LoadService $loadService,
+        /**
+         * @readonly
+         */
+        private ?TagsService $tagsService,
+        /**
+         * @readonly
+         */
+        private ParameterProcessor $parameterProcessor,
+        /**
+         * @readonly
+         */
+        private ConfigResolverInterface $configResolver,
     ) {}
 
     public function hasContent(string $name): bool

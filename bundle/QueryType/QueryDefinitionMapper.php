@@ -27,9 +27,18 @@ final class QueryDefinitionMapper
     private ?array $namedQueryConfiguration = null;
 
     public function __construct(
-        private readonly QueryTypeRegistry $queryTypeRegistry,
-        private readonly ParameterProcessor $parameterProcessor,
-        private readonly ConfigResolverInterface $configResolver,
+        /**
+         * @readonly
+         */
+        private QueryTypeRegistry $queryTypeRegistry,
+        /**
+         * @readonly
+         */
+        private ParameterProcessor $parameterProcessor,
+        /**
+         * @readonly
+         */
+        private ConfigResolverInterface $configResolver,
     ) {}
 
     /**

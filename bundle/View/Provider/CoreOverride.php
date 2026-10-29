@@ -12,7 +12,10 @@ final class CoreOverride extends CoreConfigured
 {
     public function __construct(
         MatcherFactoryInterface $matcherFactory,
-        private readonly ContentViewFallbackResolver $contentViewFallbackResolver,
+        /**
+         * @readonly
+         */
+        private ContentViewFallbackResolver $contentViewFallbackResolver,
     ) {
         parent::__construct($matcherFactory);
     }

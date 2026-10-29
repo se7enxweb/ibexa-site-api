@@ -18,9 +18,18 @@ use function sprintf;
 class ImageRuntime
 {
     public function __construct(
-        private readonly VariationHandler $imageVariationService,
-        private readonly LoggerInterface $logger = new NullLogger(),
-    ) {}
+        /**
+         * @readonly
+         */
+        private VariationHandler $imageVariationService,
+        /**
+         * @readonly
+         */
+        private ?LoggerInterface $logger = null
+    )
+    {
+        $this->logger = $logger ?? new NullLogger();
+    }
 
     /**
      * Returns the image variation object for $field/$versionInfo.

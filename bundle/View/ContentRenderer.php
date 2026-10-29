@@ -27,11 +27,26 @@ use function sprintf;
 final class ContentRenderer
 {
     public function __construct(
-        private readonly ContentViewBuilder $viewBuilder,
-        private readonly CoreContentViewBuilder $coreViewBuilder,
-        private readonly ViewRenderer $viewRenderer,
-        private readonly LoggerInterface $logger = new NullLogger(),
-    ) {}
+        /**
+         * @readonly
+         */
+        private ContentViewBuilder $viewBuilder,
+        /**
+         * @readonly
+         */
+        private CoreContentViewBuilder $coreViewBuilder,
+        /**
+         * @readonly
+         */
+        private ViewRenderer $viewRenderer,
+        /**
+         * @readonly
+         */
+        private ?LoggerInterface $logger = null
+    )
+    {
+        $this->logger = $logger ?? new NullLogger();
+    }
 
     /**
      * Renders the HTML for a given $content.

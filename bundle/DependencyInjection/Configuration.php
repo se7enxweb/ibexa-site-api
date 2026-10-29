@@ -10,7 +10,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     public function __construct(
-        protected readonly string $rootNodeName,
+        /**
+         * @readonly
+         */
+        protected string $rootNodeName,
     ) {}
 
     public function getConfigTreeBuilder(): TreeBuilder

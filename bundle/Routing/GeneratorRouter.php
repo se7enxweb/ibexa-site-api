@@ -48,13 +48,31 @@ class GeneratorRouter implements ChainedRouterInterface, RequestMatcherInterface
     private SiteAccess $currentSiteaccess;
 
     public function __construct(
-        private readonly Repository $repository,
-        private readonly UrlAliasGenerator $generator,
-        private readonly Resolver $siteaccessResolver,
-        private readonly ConfigResolverInterface $configResolver,
+        /**
+         * @readonly
+         */
+        private Repository $repository,
+        /**
+         * @readonly
+         */
+        private UrlAliasGenerator $generator,
+        /**
+         * @readonly
+         */
+        private Resolver $siteaccessResolver,
+        /**
+         * @readonly
+         */
+        private ConfigResolverInterface $configResolver,
         private RequestContext $requestContext,
-        private readonly LoggerInterface $logger = new NullLogger(),
-    ) {}
+        /**
+         * @readonly
+         */
+        private ?LoggerInterface $logger = null
+    )
+    {
+        $this->logger = $logger ?? new NullLogger();
+    }
 
     /** @noinspection PhpUnused */
     public function setSiteaccess(?SiteAccess $currentSiteAccess = null): void

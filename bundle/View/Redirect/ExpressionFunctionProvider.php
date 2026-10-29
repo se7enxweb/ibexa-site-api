@@ -11,7 +11,10 @@ use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 class ExpressionFunctionProvider implements ExpressionFunctionProviderInterface
 {
     public function __construct(
-        private readonly ContainerInterface $container,
+        /**
+         * @readonly
+         */
+        private ContainerInterface $container,
     ) {}
 
     public function getFunctions(): array

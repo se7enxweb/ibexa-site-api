@@ -24,10 +24,22 @@ final class Settings extends BaseSettings
      */
     public function __construct(
         private array $prioritizedLanguages,
-        private readonly bool $useAlwaysAvailable,
-        private readonly int $rootLocationId,
-        private readonly bool $showHiddenItems,
-        private readonly bool $failOnMissingField,
+        /**
+         * @readonly
+         */
+        private bool $useAlwaysAvailable,
+        /**
+         * @readonly
+         */
+        private int $rootLocationId,
+        /**
+         * @readonly
+         */
+        private bool $showHiddenItems,
+        /**
+         * @readonly
+         */
+        private bool $failOnMissingField,
     ) {}
 
     /**

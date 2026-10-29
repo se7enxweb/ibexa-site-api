@@ -15,9 +15,18 @@ final class ParameterProcessor
     use LanguageExpressionEvaluatorTrait;
 
     public function __construct(
-        private readonly ExpressionLanguage $expressionLanguage,
-        private readonly ConfigResolverInterface $configResolver,
-        private readonly Provider $namedObjectProvider,
+        /**
+         * @readonly
+         */
+        private ExpressionLanguage $expressionLanguage,
+        /**
+         * @readonly
+         */
+        private ConfigResolverInterface $configResolver,
+        /**
+         * @readonly
+         */
+        private Provider $namedObjectProvider,
     ) {}
 
     /**

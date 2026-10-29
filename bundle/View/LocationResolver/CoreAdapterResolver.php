@@ -14,9 +14,18 @@ use Netgen\IbexaSiteApi\API\Values\Location;
 class CoreAdapterResolver extends LocationResolver
 {
     public function __construct(
-        private readonly Repository $repository,
-        private readonly LoadService $loadService,
-        private readonly ContentInfoLocationLoader $coreLoader,
+        /**
+         * @readonly
+         */
+        private Repository $repository,
+        /**
+         * @readonly
+         */
+        private LoadService $loadService,
+        /**
+         * @readonly
+         */
+        private ContentInfoLocationLoader $coreLoader,
     ) {}
 
     public function getLocation(Content $content): Location

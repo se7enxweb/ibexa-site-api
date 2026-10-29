@@ -24,10 +24,22 @@ use Netgen\IbexaSiteApi\API\Values\Location;
 class LoadService implements LoadServiceInterface
 {
     public function __construct(
-        private readonly APILanguageResolver $languageResolver,
-        private readonly DomainObjectMapper $domainObjectMapper,
-        private readonly ContentService $contentService,
-        private readonly LocationService $locationService,
+        /**
+         * @readonly
+         */
+        private APILanguageResolver $languageResolver,
+        /**
+         * @readonly
+         */
+        private DomainObjectMapper $domainObjectMapper,
+        /**
+         * @readonly
+         */
+        private ContentService $contentService,
+        /**
+         * @readonly
+         */
+        private LocationService $locationService,
     ) {}
 
     public function loadContent(int $contentId): Content

@@ -22,11 +22,26 @@ class MatcherFactory extends ClassNameMatcherFactory
     public function __construct(
         Repository $repository,
         string $relativeNamespace,
-        private readonly ?ViewMatcherRegistry $viewMatcherRegistry,
-        private readonly ConfigResolverInterface $configResolver,
-        private readonly string $parameterName,
-        private readonly ?string $namespace = null,
-        private readonly ?string $scope = null,
+        /**
+         * @readonly
+         */
+        private ?ViewMatcherRegistry $viewMatcherRegistry,
+        /**
+         * @readonly
+         */
+        private ConfigResolverInterface $configResolver,
+        /**
+         * @readonly
+         */
+        private string $parameterName,
+        /**
+         * @readonly
+         */
+        private ?string $namespace = null,
+        /**
+         * @readonly
+         */
+        private ?string $scope = null,
     ) {
         parent::__construct($repository, $relativeNamespace);
     }

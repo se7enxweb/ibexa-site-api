@@ -23,7 +23,10 @@ class Renderer extends CoreRenderer
         string $tagConfigurationNamespace,
         string $styleConfigurationNamespace,
         string $embedConfigurationNamespace,
-        private readonly string $ngEmbedConfigurationNamespace,
+        /**
+         * @readonly
+         */
+        private string $ngEmbedConfigurationNamespace,
         ?LoggerInterface $logger = null,
         array $customTagsConfiguration = [],
         array $customStylesConfiguration = [],

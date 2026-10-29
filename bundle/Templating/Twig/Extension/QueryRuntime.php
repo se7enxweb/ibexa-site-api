@@ -20,7 +20,10 @@ use function sprintf;
 class QueryRuntime
 {
     public function __construct(
-        private readonly QueryExecutor $queryExecutor,
+        /**
+         * @readonly
+         */
+        private QueryExecutor $queryExecutor,
     ) {}
 
     public function executeQuery(mixed $context, string $name): Pagerfanta

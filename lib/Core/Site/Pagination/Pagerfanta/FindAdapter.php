@@ -19,7 +19,10 @@ final class FindAdapter extends BaseAdapter
 {
     public function __construct(
         Query $query,
-        private readonly FindService $findService,
+        /**
+         * @readonly
+         */
+        private FindService $findService,
     ) {
         parent::__construct($query);
     }

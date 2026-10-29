@@ -13,7 +13,10 @@ use Netgen\Bundle\IbexaSiteApiBundle\View\ContentRenderer;
 final class IbexaContentViewRuntime
 {
     public function __construct(
-        private readonly ContentRenderer $contentRenderer,
+        /**
+         * @readonly
+         */
+        private ContentRenderer $contentRenderer,
     ) {}
 
     /**

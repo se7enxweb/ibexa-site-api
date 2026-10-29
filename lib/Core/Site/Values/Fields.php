@@ -42,10 +42,22 @@ final class Fields extends APIFields
     private array $fieldsByNumericSequence = [];
 
     public function __construct(
-        private readonly SiteContent $content,
-        private readonly DomainObjectMapper $domainObjectMapper,
-        private readonly bool $failOnMissingField,
-        private readonly LoggerInterface $logger,
+        /**
+         * @readonly
+         */
+        private SiteContent $content,
+        /**
+         * @readonly
+         */
+        private DomainObjectMapper $domainObjectMapper,
+        /**
+         * @readonly
+         */
+        private bool $failOnMissingField,
+        /**
+         * @readonly
+         */
+        private LoggerInterface $logger,
     ) {}
 
     public function getIterator(): Traversable
